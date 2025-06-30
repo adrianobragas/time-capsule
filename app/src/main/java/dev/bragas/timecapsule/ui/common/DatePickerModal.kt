@@ -25,6 +25,8 @@ import kotlinx.coroutines.flow.collectLatest
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
+import java.time.ZoneOffset
+import java.time.ZoneOffset.UTC
 import java.util.Calendar
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -39,13 +41,14 @@ fun DatePickerModal(
     val interactionSource = remember { MutableInteractionSource() }
 
     val today = remember {
-        LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
+        LocalDate.now()
     }
 
     val datePickerState = rememberDatePickerState(
         selectableDates = object : SelectableDates {
             override fun isSelectableDate(utcTimeMillis: Long): Boolean {
-                return utcTimeMillis >= today
+                val localDate = Instant.ofEpochMilli(utcTimeMillis).atZone(ZoneOffset.UTC).toLocalDate()
+                return localDate >= today
             }
 
             override fun isSelectableYear(year: Int): Boolean {
