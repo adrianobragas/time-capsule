@@ -126,7 +126,7 @@ fun SignUpScreen(
                 onClick = {
                     signUpViewModel.signUp(
                         onSuccess = {
-                            Toast.makeText(context, "Bien venue!", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Bienvenue!", Toast.LENGTH_SHORT).show()
                             navController.navigate("timeCapsuleList")
                         },
                         onError = { errorMessage ->
